@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   base_no_env: &base_no_env
-    image: "robdmc/ibisbug"
+    image: "robdmc/dockerjupyterpostgres"
     links:
       - db
     volumes:

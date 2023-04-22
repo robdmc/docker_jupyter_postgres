@@ -10,8 +10,8 @@ help:  ## Print the help documentation
 build: ## Build images locally and don't send to dockerhub
 	docker builder prune -f
 	docker-compose down
-	docker rmi -f robdmc/ibisbug
-	docker build -t  robdmc/ibisbug .
+	docker rmi -f robdmc/dockerjupyterpostgres
+	docker build -t  robdmc/dockerjupyterpostgres .
 
 .PHONY: test
 test: ## Run test suite
@@ -42,16 +42,12 @@ load_db: ## Load table into the database
 down: ## stop all docker-compose services
 	docker-compose down
 
-.PHONY: truncate
-truncate: ## Truncate all computed tables
-	docker-compose run --rm truncate
-
-
 .PHONY: reset
 reset: ## Only reset docker stuff for this project
 	docker-compose down
-	# -docker volume rm solar_production_db-data
-	-docker images | grep 'ibistest' | awk '{print $3}'  | xargs docker rmi
+	-docker volume rm docker_jupyter_postgres_db-data
+	-docker volume rm docker_jupyter_postgres_penv
+	-docker images | grep 'dockerjupyterpostgres' | awk '{print $3}'  | xargs docker rmi
 	-docker builder prune -f
 
 
